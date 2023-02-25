@@ -17,6 +17,7 @@ As of now, this data field is not in the Connec IQ store (this might change in t
 ### Note
 * Currently this data field is only available for the Garmin Instinct 2s / 2s solar.
 * In order to fit the whole text on the screen you have to choose a 2 field layout and place this data field in the larger field:
+
 ![](/doc/data_field_layout.png)
 
 ### Author
