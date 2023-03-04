@@ -18,7 +18,22 @@ class HrZoneDataFieldView extends WatchUi.DataField {
     // Set your layout here. Anytime the size of obscurity of
     // the draw context is changed this will be called.
     function onLayout(dc as Dc) as Void {
+        var screenHeight = dc.getHeight().toFloat() as Lang.Float;
+        var fontHeight = dc.getFontHeight(Graphics.FONT_TINY).toFloat() as Lang.Float;
+        var screenToFontRatio = screenHeight/fontHeight as Lang.Float;
+        var screenToFontRatioInstinct2s = 156.0/19.0 as Lang.Float; //screen height of Instinct 2s [pixel] / FONT_TINY height [pixel]
+        var scalingFactor = screenToFontRatio/screenToFontRatioInstinct2s as Lang.Float;
+        var drawableIds = ["zone0_text_id", "zone1_text_id", "zone2_text_id", "zone3_text_id", "zone4_text_id", "zone5_text_id"] as Lang.Array<Lang.String>;
+
         View.setLayout(Rez.Layouts.MainLayout(dc));
+
+        for (var i = 0 as Lang.Number; i < drawableIds.size(); i += 1) {
+            var labelView = View.findDrawableById(drawableIds[i]) as WatchUi.Drawable or Null;
+            if (labelView != null) {
+                labelView.locX = 15.0*scalingFactor;
+                labelView.locY = (screenHeight/2.0) - (fontHeight*scalingFactor*(i+1-drawableIds.size()/2).toFloat());
+            }
+        }
     }
 
     // The given info object contains all the current workout information.
@@ -75,12 +90,12 @@ class HrZoneDataFieldView extends WatchUi.DataField {
             zone5_text.setColor(Graphics.COLOR_BLACK);
         }
 
-        zone0_text.setText("Zone 0: " + percentages[0] + "%");
-        zone1_text.setText("Zone 1: " + percentages[1] + "%");
-        zone2_text.setText("Zone 2: " + percentages[2] + "%");
-        zone3_text.setText("Zone 3: " + percentages[3] + "%");
-        zone4_text.setText("Zone 4: " + percentages[4] + "%");
-        zone5_text.setText("Zone 5: " + percentages[5] + "%");
+        zone0_text.setText("Zone0: " + percentages[0] + "%");
+        zone1_text.setText("Zone1: " + percentages[1] + "%");
+        zone2_text.setText("Zone2: " + percentages[2] + "%");
+        zone3_text.setText("Zone3: " + percentages[3] + "%");
+        zone4_text.setText("Zone4: " + percentages[4] + "%");
+        zone5_text.setText("Zone5: " + percentages[5] + "%");
 
         // Call parent's onUpdate(dc) to redraw the layout
         View.onUpdate(dc);
