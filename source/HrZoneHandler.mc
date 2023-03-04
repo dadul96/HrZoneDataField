@@ -17,7 +17,7 @@ class HrZoneHandler {
     private var hrZoneThresholds as Lang.Array<Lang.Number>;
     private var secondsInZones as Lang.Array<Lang.Number> = [0, 0, 0, 0, 0, 0] as Lang.Array<Lang.Number>;
     private var percentInZones as Lang.Array<Lang.Number> = [0, 0, 0, 0, 0, 0] as Lang.Array<Lang.Number>;
-    private var totalSeconds = 0 as Lang.Number;
+    private var totalSeconds as Lang.Number = 0 as Lang.Number;
 
     // constructor:
     public function initialize() {
@@ -43,11 +43,12 @@ class HrZoneHandler {
             return profileThresholds.slice(0, 5);
         }
         else {
-            var profile = UserProfile.getProfile() as UserProfile.Profile;
+            var profile = UserProfile.getProfile() as UserProfile.Profile or Null;
+            var currentYear = Gregorian.info(Time.today(), Time.FORMAT_SHORT).year as Lang.Number or Null;
             var HrMax = 0 as Lang.Number;
 
-            if ((profile != null) && (profile.birthYear != null)) {
-                var age = (Gregorian.info(Time.today(), Time.FORMAT_SHORT).year - profile.birthYear) as Lang.Number; // calculate the age
+            if ((profile != null) && (profile.birthYear != null) && (currentYear != null)) {
+                var age = currentYear - profile.birthYear as Lang.Number; // calculate the age
                 
                 if (profile.gender == UserProfile.GENDER_FEMALE) {
                     // formula for female depending on age [1]:

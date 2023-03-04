@@ -7,8 +7,8 @@ class HrZoneDataFieldView extends WatchUi.DataField {
 
     private const refreshDelaySeconds = 4 as Lang.Number;
 
-    private var hrZones = new HrZoneHandler();
-    private var refreshCounter = refreshDelaySeconds as Lang.Number;
+    private var hrZones as HrZoneHandler = new HrZoneHandler() as HrZoneHandler;
+    private var refreshCounter as Lang.Number = refreshDelaySeconds as Lang.Number;
     private var percentages as Lang.Array<Lang.Number> = [0, 0, 0, 0, 0, 0] as Lang.Array<Lang.Number>;
 
     function initialize() {
